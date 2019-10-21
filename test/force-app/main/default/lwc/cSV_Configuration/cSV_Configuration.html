@@ -1,0 +1,149 @@
+<template>
+    <lightning-card variant="Narrow" title="Configuration" icon-name="standard:apps">
+        <div if:false={isRegistered}>
+            <div class="slds-grid slds-wrap slds-m-around_medium">
+                <div class="slds-col slds-size_8-of-12">
+                    Configuration
+                </div>
+                <div class="slds-col slds-size_4-of-12">
+                    <lightning-button variant="brand" label="Salesforce Configuration" title="Salesforce Configuration"
+                        icon-name="utility:custom_apps" onclick={handleConfiguration} icon-position="left"
+                        class="slds-m-left_x-small"></lightning-button>
+                    <lightning-button variant="success" label="Validate" title="Validate" icon-name="utility:approval"
+                        onclick={handleValidation} icon-position="left" class="slds-m-left_x-small"></lightning-button>
+                </div>
+            </div>
+        </div>
+        <div if:true={isRegistered}>
+            <!-- <lightning-datatable key-field="id" data={data} columns={columns} onrowaction={handleRowAction}>> 
+            </lightning-datatable>-->
+            <div class="slds-m-horizontal_xx-large">
+                <div class="slds-grid slds-grid_pull-padded-medium">
+                    <div class="slds-col slds-p-horizontal_medium">
+                        <lightning-input type="text" disabled name="Client Id" label="Client Id"
+                            value={data.uploadCSV__Client_Id__c}></lightning-input>
+                    </div>
+                    <div class="slds-col slds-p-horizontal_medium">
+                        <lightning-input type="text" name="Client Secret" disabled label="Client Secret"
+                            value={data.uploadCSV__Client_Secret__c}>
+                        </lightning-input>
+                    </div>
+                </div>
+                <div class="slds-grid slds-grid_pull-padded-medium">
+                    <div class="slds-col slds-p-horizontal_medium">
+                        <lightning-input type="text" name="Username" disabled label="Username"
+                            value={data.uploadCSV__Username__c}>
+                        </lightning-input>
+                    </div>
+                    <div class="slds-col slds-p-horizontal_medium">
+                        <lightning-input type="text" name="Password" disabled label="Password"
+                            value={data.uploadCSV__Password__c}>
+                        </lightning-input>
+                    </div>
+                </div>
+                <div class="slds-grid slds-grid_pull-padded-medium">
+                    <div class="slds-col slds-p-horizontal_medium">
+                        <lightning-input type="text" disabled name="Security Token" label="Security Token"
+                            value={data.uploadCSV__Security_Token__c}></lightning-input>
+                    </div>
+                    <div class="slds-col slds-p-horizontal_medium">
+                        <lightning-input type="url" disabled name="Base URL" label="Base URL"
+                            value={data.uploadCSV__URL__c}></lightning-input>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div slot="footer">
+            <p style="color: red">{error}</p>
+        </div>
+    </lightning-card>
+    <div if:true={isOpen}>
+        <!--###### MODAL BOX Start######-->
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+            aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <!-- ###### MODAL BOX HEADER Start ######-->
+                <header class="slds-modal__header">
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Salesforce Configuration
+                    </h2>
+                </header>
+                <!--###### MODAL BOX BODY Part Start######-->
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <div class="slds-grid">
+                        <div class="slds-col slds-p-horizontal_medium">
+                            <lightning-input type="text" name="Client Id" label="Client Id"
+                                onchange={handleClientIdChange}></lightning-input>
+                        </div>
+                        <div class="slds-col slds-p-horizontal_medium">
+                            <lightning-input type="text" name="Client secret" label="Client secret"
+                                onchange={handleClientSecretChange}></lightning-input>
+                        </div>
+                    </div>
+                    <div class="slds-grid">
+                        <div class="slds-col slds-p-horizontal_medium">
+                            <lightning-input type="text" name="Username" label="Username"
+                                onchange={handleUsernameChange}></lightning-input>
+                        </div>
+                        <div class="slds-col slds-p-horizontal_medium">
+                            <lightning-input type="text" name="Password" label="Password"
+                                onchange={handlePasswordChange}></lightning-input>
+                        </div>
+                    </div>
+                    <div class="slds-grid">
+                        <div class="slds-col slds-p-horizontal_medium">
+                            <lightning-input type="text" name="Security token" label="Security token (case-sensitive)"
+                                onchange={handletokenChange}>
+                            </lightning-input>
+                        </div>
+                        <div class="slds-col slds-p-horizontal_medium">
+                            <lightning-input type="url" name="Base URL" label="Base URL" onchange={handleUrlChange}>
+                            </lightning-input>
+                        </div>
+                    </div>
+                    <div class="slds-grid slds-grid_vertical slds-m-left_medium slds-m-right_medium">
+                        <div class="slds-col">
+
+                        </div>
+                    </div>
+                </div>
+                <!--###### MODAL BOX FOOTER Part Start ######-->
+                <footer class="slds-modal__footer">
+                    <lightning-button variant="brand" label="Save" title="Save" icon-name="utility:save"
+                        class="slds-m-left_x-small" onclick={saveRecords}></lightning-button>
+                    <lightning-button variant="destructive" label="Cancel" title="Cancel" icon-name="utility:close"
+                        class="slds-m-left_x-small" onclick={closeModal}></lightning-button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+        <!--###### MODAL BOX Part END Here ######-->
+    </div>
+    <div if:true={isValidated}>
+        <!--###### MODAL BOX Start######-->
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+            aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <!-- ###### MODAL BOX HEADER Start ######-->
+                <header class="slds-modal__header">
+                    <h2 id="modal-heading-02" class="slds-text-heading_medium slds-hyphenate">Salesforce Configuration
+                    </h2>
+                </header>
+                <!--###### MODAL BOX BODY Part Start######-->
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-2">
+
+
+                </div>
+                <!--###### MODAL BOX FOOTER Part Start ######-->
+                <footer class="slds-modal__footer">
+                    <lightning-button variant="brand" label="Validate" title="Validate" icon-name="utility:approval"
+                        class="slds-m-left_x-small" onclick={handleValidation}></lightning-button>
+                    <lightning-button variant="destructive" label="Cancel" title="Cancel" icon-name="utility:close"
+                        class="slds-m-left_x-small" onclick={closeValidate}></lightning-button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+        <!--###### MODAL BOX Part END Here ######-->
+    </div>
+
+</template>

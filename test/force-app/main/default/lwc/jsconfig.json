@@ -2,7 +2,23 @@
     "compilerOptions": {
         "experimentalDecorators": true,
         "baseUrl": ".",
-        "paths": {}
+        "paths": {
+            "c/cSV_GetObject": [
+                "cSV_GetObject/cSV_GetObject.js"
+            ],
+            "c/cSV_Buttons": [
+                "cSV_Buttons/cSV_Buttons.js"
+            ],
+            "c/salesforceDX": [
+                "salesforceDX/salesforceDX.js"
+            ],
+            "c/cSV_Upload": [
+                "cSV_Upload/cSV_Upload.js"
+            ],
+            "c/cSV_Configuration": [
+                "cSV_Configuration/cSV_Configuration.js"
+            ]
+        }
     },
     "include": [
         "**/*",

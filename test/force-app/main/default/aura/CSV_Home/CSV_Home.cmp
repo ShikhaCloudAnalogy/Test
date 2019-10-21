@@ -1,0 +1,35 @@
+<aura:component description="CSV_Home" implements="force:appHostable">
+    <aura:attribute name="selectedTab" type="String" default="blog" />
+    <!--<aura:handler name="init" value="{!this}" action="{!c.doInit}"/>-->
+    <div class="slds-p-around_large" style="height: 90%">
+            <div class="slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-12">
+                        <c:salesforceDX onfilterchange="{!c.changeTab}"/> 
+                </div>
+                <div class="slds-col slds-size_10-of-12">
+                    <aura:if isTrue="{!v.selectedTab == 'about'}">
+                        About
+                    </aura:if>
+                    <aura:if isTrue="{!v.selectedTab == 'blog'}">
+                        <c:cSV_Configuration/>
+                    </aura:if>
+                    <aura:if isTrue="{!v.selectedTab == 'projects'}">
+                        <c:cSV_GetObject/>
+                    </aura:if>
+                    <aura:if isTrue="{!v.selectedTab == 'contact'}">
+                        <c:cSV_Upload/>
+                    </aura:if>
+                </div>
+                <div class="slds-col slds-size_1-of-12"></div>
+            </div>           
+    </div>
+    <footer role="contentinfo"  class="slds-p-around_large" style="height: 10%">
+        <!-- LAYOUT GRID -->
+        <div class="slds-grid slds-grid_align-spread">
+            <p class="slds-col unicorn" >The Unicorn</p>
+            <p class="slds-col">                         
+            </p>
+        </div>
+        <!-- / LAYOUT GRID -->
+    </footer>
+</aura:component>

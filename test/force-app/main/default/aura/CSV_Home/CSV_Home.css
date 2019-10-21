@@ -1,0 +1,13 @@
+.THIS {
+    background: white;
+}
+
+.THIS .slds-template_default{
+    padding: .0rem !important; 
+} 
+.THIS .unicorn {
+    color: black;
+    font-size: large;
+    font-family: serif;
+    margin-top: 5px;
+  }
